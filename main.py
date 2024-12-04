@@ -1,0 +1,38 @@
+
+import databaseFunctions as data
+import scraping as scrap
+
+service = int(input("Are you adding new faculty data or updating existing faculty data (1 for new data 2 for existing data)"))
+
+if service == 1  :
+    name = input("Provide the name of the faculty ")
+    dept = input("Provide Department name ")
+    level = input("Provide profession level of the faculty member ")
+    link = input("Provide Google scholar link")
+
+    data.newdata(name, dept, level, link)
+
+    paper, ranges, citation, year, type, links, publisher, h_index = scrap.scroll(link)
+
+    id = data.updateAmount(link, ranges, h_index)
+    data.paperDetails(paper, citation, year, publisher, type, links, id)
+
+elif service == 2 :
+
+    service_url_ID = int(input("Please provide the ID of the faculty member "))
+
+    Existence =  data.facultyExistance(service_url_ID)
+
+    if Existence :
+
+        print("user exists and url is ", Existence)
+        paper, ranges, citation, year, type, links, publisher, h_index = scrap.scroll(Existence)
+
+        id = data.updateAmount(Existence, ranges, h_index)
+        data.paperDetails(paper, citation, year, publisher, type, links, id)
+        
+    else:
+        print("No faculty with such ID",Existence)
+
+else :
+    print("No valid service selected")
