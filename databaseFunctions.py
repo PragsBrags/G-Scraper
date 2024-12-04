@@ -6,7 +6,7 @@ load_dotenv()
 import mysql.connector
 
 db = mysql.connector.connect(
-    host=os.getenv('host'),
+    host=os.getenv('host') or '127.0.0.1',
     user=os.getenv('user'),
     passwd=os.getenv('passwd'),
     database=os.getenv('database')
@@ -79,7 +79,7 @@ def updateAmount ( service_url, ranges, h_index) :
    mycursor.execute(updateHindex, (h_index.text, id))
    db.commit()
 
-   return id
+   return id, DID
 
 def paperDetails (paper, cit, year, publisher, types, lots, id) :
    
@@ -99,4 +99,45 @@ def paperDetails (paper, cit, year, publisher, types, lots, id) :
             result_id= mycursor.fetchone()
             mycursor.execute("Insert IGNORE into tbl_paper_author (author_id,paper_id) values(%s,%s)",(id,result_id[0]))
             db.commit()
+
+def updateHindex (DID) :
+   
+   queryscID = "select scholar_id from tbl_scholar where DID = %s "
+   mycursor.execute(queryscID,(DID,))
+   results = mycursor.fetchall()
+   scID = [row[0] for row in results]
+   
+   PID = []
+
+   for i in scID :
+    queryPID = "select paper_id from tbl_paper_author where author_id = %s"
+    mycursor.execute(queryPID, (i,))
+    results = mycursor.fetchall()
+    PID.extend([row[0] for row in results])
+
+   uniquePID = list(set(PID))
+
+   cite = []
+
+   for i in uniquePID :
+    queryCITE = "select citation from tbl_paper where paper_id = %s"
+    mycursor.execute(queryCITE, (i,))
+    results = mycursor.fetchall()
+    cite.extend([row[0] for row in results])
+
+   # Step 1: Sort the list in descending order
+   cite.sort(reverse=True)
+
+   # Step 2: Find the h-index
+   h_index = 0
+   for i, citation in enumerate(cite):
+    if citation >= i + 1:  # Check if citations are >= rank (i+1)
+        h_index = i + 1
+    else:
+        break  # Stop when citation is less than rank
+   
+   queryhindex = "update tbl_dep_count set hindex = %s where DID = %s"
+   mycursor.execute(queryhindex, (h_index, DID))
+   db.commit()
+    
     

@@ -14,8 +14,9 @@ if service == 1  :
 
     paper, ranges, citation, year, type, links, publisher, h_index = scrap.scroll(link)
 
-    id = data.updateAmount(link, ranges, h_index)
+    id, DID = data.updateAmount(link, ranges, h_index)
     data.paperDetails(paper, citation, year, publisher, type, links, id)
+    data.updateHindex(DID)
 
 elif service == 2 :
 
@@ -28,8 +29,9 @@ elif service == 2 :
         print("user exists and url is ", Existence)
         paper, ranges, citation, year, type, links, publisher, h_index = scrap.scroll(Existence)
 
-        id = data.updateAmount(Existence, ranges, h_index)
+        id, DID = data.updateAmount(Existence, ranges, h_index)
         data.paperDetails(paper, citation, year, publisher, type, links, id)
+        data.updateHindex(DID)
         
     else:
         print("No faculty with such ID",Existence)
