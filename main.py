@@ -16,7 +16,8 @@ if service == 1  :
 
     id, DID = data.updateAmount(link, ranges, h_index)
     data.paperDetails(paper, citation, year, publisher, type, links, id)
-    data.updateHindex(DID)
+    data.updateHindexDept(DID)
+    data.updateSchool()
 
 elif service == 2 :
 
@@ -31,7 +32,8 @@ elif service == 2 :
 
         id, DID = data.updateAmount(Existence, ranges, h_index)
         data.paperDetails(paper, citation, year, publisher, type, links, id)
-        data.updateHindex(DID)
+        data.updateHindexDept(DID)
+        data.updateSchool()
         
     else:
         print("No faculty with such ID",Existence)

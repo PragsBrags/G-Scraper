@@ -53,6 +53,7 @@ CREATE TABLE `tbl_dep_count` (
   `department` varchar(100) DEFAULT NULL,
   `paper_amt` int DEFAULT NULL,
   `hindex` int DEFAULT NULL,
+  `cite_score` int DEFAULT NULL,
   KEY `DID` (`DID`),
   CONSTRAINT `tbl_dep_count_ibfk_1` FOREIGN KEY (`DID`) REFERENCES `tbl_department` (`DID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -64,7 +65,7 @@ CREATE TABLE `tbl_dep_count` (
 
 LOCK TABLES `tbl_dep_count` WRITE;
 /*!40000 ALTER TABLE `tbl_dep_count` DISABLE KEYS */;
-INSERT INTO `tbl_dep_count` VALUES (10,'Department of Computer Science and Engineering',33,NULL);
+INSERT INTO `tbl_dep_count` VALUES (10,'Department of Computer Science and Engineering',33,7,1);
 /*!40000 ALTER TABLE `tbl_dep_count` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,6 +192,8 @@ DROP TABLE IF EXISTS `tbl_school`;
 CREATE TABLE `tbl_school` (
   `SID` int NOT NULL AUTO_INCREMENT,
   `School` varchar(255) DEFAULT NULL,
+  `hindex` int DEFAULT NULL,
+  `cite_score` int DEFAULT NULL,
   PRIMARY KEY (`SID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -201,7 +204,7 @@ CREATE TABLE `tbl_school` (
 
 LOCK TABLES `tbl_school` WRITE;
 /*!40000 ALTER TABLE `tbl_school` DISABLE KEYS */;
-INSERT INTO `tbl_school` VALUES (1,'School of Science'),(2,'School of Engineering'),(3,'School of Arts');
+INSERT INTO `tbl_school` VALUES (1,'School of Science',0,NULL),(2,'School of Engineering',7,NULL),(3,'School of Arts',0,NULL);
 /*!40000 ALTER TABLE `tbl_school` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -214,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-04 13:28:09
+-- Dump completed on 2024-12-06  0:29:57

@@ -75,6 +75,16 @@ def updateAmount ( service_url, ranges, h_index) :
    mycursor.execute(updateDeptAmount, (deptPaper, DID))
    db.commit()
 
+   querytotalPaper = "Select SUM(paper_amt) as num_paper FROM tbl_dep_count"
+   mycursor.execute(querytotalPaper)
+   results = mycursor.fetchone()
+   totalPaper = results[0]
+
+   deptCiteScore = deptPaper/totalPaper
+   queryCiteScore = "update tbl_dep_count set cite_score = %s where DID =%s"
+   mycursor.execute(queryCiteScore,(deptCiteScore, DID))
+   db.commit()
+
    updateHindex = "update tbl_scholar set h_index = %s where scholar_id = %s"
    mycursor.execute(updateHindex, (h_index.text, id))
    db.commit()
@@ -100,7 +110,7 @@ def paperDetails (paper, cit, year, publisher, types, lots, id) :
             mycursor.execute("Insert IGNORE into tbl_paper_author (author_id,paper_id) values(%s,%s)",(id,result_id[0]))
             db.commit()
 
-def updateHindex (DID) :
+def updateHindexDept (DID) :
    
    queryscID = "select scholar_id from tbl_scholar where DID = %s "
    mycursor.execute(queryscID,(DID,))
@@ -140,4 +150,58 @@ def updateHindex (DID) :
    mycursor.execute(queryhindex, (h_index, DID))
    db.commit()
     
+def updateSchool () :
+   
+   queryschID = "select SID from tbl_school"
+   mycursor.execute(queryschID)
+   results = mycursor.fetchall()
+   schID = [row[0] for row in results]
+
+   for i in schID :
+    queryDID = "select DID from tbl_department where SID = %s"
+    mycursor.execute(queryDID, (i,))
+    results = mycursor.fetchall()
+    DID = [row[0] for row in results]
+   
+    scID = []
+
+    for j in DID :
+        queryscID = "select scholar_id from tbl_scholar where DID = %s"
+        mycursor.execute(queryscID, (j,))
+        results = mycursor.fetchall()
+        scID.extend([row[0] for row in results])
     
+    PID = []
+
+    for j in scID :
+        queryPID = "select paper_id from tbl_paper_author where author_id = %s"
+        mycursor.execute(queryPID, (j,))
+        results = mycursor.fetchall()
+        PID.extend([row[0] for row in results])
+
+    uniquePID = list(set(PID))
+
+    cite = []
+
+    for j in uniquePID :
+        queryCITE = "select citation from tbl_paper where paper_id = %s"
+        mycursor.execute(queryCITE, (j,))
+        results = mycursor.fetchall()
+        cite.extend([row[0] for row in results])
+
+    # Step 1: Sort the list in descending order
+    cite.sort(reverse=True)
+
+    # Step 2: Find the h-index
+    h_index = 0
+    for k, citation in enumerate(cite):
+        if citation >= k + 1:  # Check if citations are >= rank (i+1)
+            h_index = k + 1
+        else:
+            break  # Stop when citation is less than rank
+    
+    queryhindex = "update tbl_school set hindex = %s where SID = %s"
+    mycursor.execute(queryhindex, (h_index, i))
+    db.commit()
+       
+
