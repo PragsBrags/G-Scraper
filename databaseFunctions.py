@@ -156,6 +156,11 @@ def updateSchool () :
    mycursor.execute(queryschID)
    results = mycursor.fetchall()
    schID = [row[0] for row in results]
+   
+   querytotalPaper = "Select SUM(paper_amt) as num_paper FROM tbl_dep_count"
+   mycursor.execute(querytotalPaper)
+   results = mycursor.fetchone()
+   totalPaper = results[0]
 
    for i in schID :
     queryDID = "select DID from tbl_department where SID = %s"
@@ -170,6 +175,24 @@ def updateSchool () :
         mycursor.execute(queryscID, (j,))
         results = mycursor.fetchall()
         scID.extend([row[0] for row in results])
+
+    sum = 0
+
+    for j in DID :
+       queryDIDamt = "select paper_amt from tbl_dep_count where DID = %s"
+       mycursor.execute(queryDIDamt, (j,))
+       result = mycursor.fetchone()
+       if result is not None:  # Check if the query returned a result
+        paper_amt = result[0]  # Extract the first column value
+        sum = sum + paper_amt
+       else:
+        sum = sum + 0
+
+    citeScore = sum/totalPaper
+
+    queryCite = "update tbl_school set cite_score = %s where SID = %s"
+    mycursor.execute(queryCite, (citeScore, i))
+    db.commit()   
     
     PID = []
 

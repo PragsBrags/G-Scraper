@@ -204,7 +204,7 @@ CREATE TABLE `tbl_school` (
 
 LOCK TABLES `tbl_school` WRITE;
 /*!40000 ALTER TABLE `tbl_school` DISABLE KEYS */;
-INSERT INTO `tbl_school` VALUES (1,'School of Science',0,NULL),(2,'School of Engineering',7,NULL),(3,'School of Arts',0,NULL);
+INSERT INTO `tbl_school` VALUES (1,'School of Science',0,0),(2,'School of Engineering',7,1),(3,'School of Arts',0,0);
 /*!40000 ALTER TABLE `tbl_school` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -217,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-06  0:29:57
+-- Dump completed on 2024-12-06 12:39:10
