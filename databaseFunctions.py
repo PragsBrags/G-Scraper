@@ -197,6 +197,10 @@ def updateSchool () :
 
     citeScore = sum/totalPaper
 
+    queryPamt = "update tbl_school set paper_amt = %s where SID = %s"
+    mycursor.execute(queryPamt, (sum, i))
+    db.commit()
+
     queryCite = "update tbl_school set cite_score = %s where SID = %s"
     mycursor.execute(queryCite, (citeScore, i))
     db.commit()   
