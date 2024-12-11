@@ -194,6 +194,7 @@ CREATE TABLE `tbl_school` (
   `School` varchar(255) DEFAULT NULL,
   `hindex` int DEFAULT NULL,
   `cite_score` int DEFAULT NULL,
+  `paper_amt` int DEFAULT NULL,
   PRIMARY KEY (`SID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -204,7 +205,7 @@ CREATE TABLE `tbl_school` (
 
 LOCK TABLES `tbl_school` WRITE;
 /*!40000 ALTER TABLE `tbl_school` DISABLE KEYS */;
-INSERT INTO `tbl_school` VALUES (1,'School of Science',0,0),(2,'School of Engineering',7,1),(3,'School of Arts',0,0);
+INSERT INTO `tbl_school` VALUES (1,'School of Science',0,0,0),(2,'School of Engineering',7,1,33),(3,'School of Arts',0,0,0);
 /*!40000 ALTER TABLE `tbl_school` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -217,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-06 12:39:10
+-- Dump completed on 2024-12-11 14:08:43
