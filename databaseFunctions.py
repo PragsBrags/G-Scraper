@@ -14,6 +14,13 @@ db = mysql.connector.connect(
 
 mycursor = db.cursor();
 
+def allScholar () :
+   queryScholar = "select p_URL from tbl_scholar"
+   mycursor.execute(queryScholar)
+   results = mycursor.fetchall()
+   scholar = [row[0] for row in results]
+   return scholar
+
 def newdata ( Name, dept, level, scholar_link) :
    queryDept = "select DID from tbl_department where Dept = %s"
    mycursor.execute(queryDept, (dept,))

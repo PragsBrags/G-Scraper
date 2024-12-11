@@ -1,6 +1,20 @@
-
+import time
+import schedule
 import databaseFunctions as data
 import scraping as scrap
+
+def autoScrape () :
+    scholars = []
+    scholars = data.allScholar()
+    for i in scholars :
+        paper, ranges, citation, year, type, links, publisher, h_index = scrap.scroll(i)
+
+        id, DID = data.updateAmount(i, ranges, h_index)
+        data.paperDetails(paper, citation, year, publisher, type, links, id)
+        data.updateHindexDept(DID)
+        data.updateSchool()
+
+autoScrape()
 
 service = int(input("Are you adding new faculty data or updating existing faculty data (1 for new data 2 for existing data)"))
 
