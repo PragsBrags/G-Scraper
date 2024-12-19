@@ -53,7 +53,7 @@ CREATE TABLE `tbl_dep_count` (
   `department` varchar(100) DEFAULT NULL,
   `paper_amt` int DEFAULT NULL,
   `hindex` int DEFAULT NULL,
-  `cite_score` int DEFAULT NULL,
+  `cite_score` float DEFAULT NULL,
   KEY `DID` (`DID`),
   CONSTRAINT `tbl_dep_count_ibfk_1` FOREIGN KEY (`DID`) REFERENCES `tbl_department` (`DID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -166,6 +166,7 @@ CREATE TABLE `tbl_scholar` (
   `h_index` int DEFAULT NULL,
   `DID` int DEFAULT NULL,
   `p_URL` varchar(255) DEFAULT NULL,
+  `cite_score` float DEFAULT NULL,
   PRIMARY KEY (`scholar_id`),
   KEY `DID` (`DID`),
   CONSTRAINT `tbl_scholar_ibfk_1` FOREIGN KEY (`DID`) REFERENCES `tbl_department` (`DID`)
@@ -178,7 +179,7 @@ CREATE TABLE `tbl_scholar` (
 
 LOCK TABLES `tbl_scholar` WRITE;
 /*!40000 ALTER TABLE `tbl_scholar` DISABLE KEYS */;
-INSERT INTO `tbl_scholar` VALUES ('Professor',1,'Manoj Shakya',5,10,'https://scholar.google.com/citations?user=CMzC8p4AAAAJ&hl=en&oi=ao'),('Professor',2,'Sushil Shrestha',5,10,'https://scholar.google.com/citations?hl=en&user=98wuyCUAAAAJ');
+INSERT INTO `tbl_scholar` VALUES ('Professor',1,'Manoj Shakya',5,10,'https://scholar.google.com/citations?user=CMzC8p4AAAAJ&hl=en&oi=ao',0.545455),('Professor',2,'Sushil Shrestha',5,10,'https://scholar.google.com/citations?hl=en&user=98wuyCUAAAAJ',0.454545);
 /*!40000 ALTER TABLE `tbl_scholar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +194,7 @@ CREATE TABLE `tbl_school` (
   `SID` int NOT NULL AUTO_INCREMENT,
   `School` varchar(255) DEFAULT NULL,
   `hindex` int DEFAULT NULL,
-  `cite_score` int DEFAULT NULL,
+  `cite_score` float DEFAULT NULL,
   `paper_amt` int DEFAULT NULL,
   PRIMARY KEY (`SID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -218,4 +219,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-18 14:52:16
+-- Dump completed on 2024-12-19 11:23:05
