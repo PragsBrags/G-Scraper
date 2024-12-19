@@ -58,6 +58,7 @@ def updateAmount ( service_url, ranges, h_index) :
    mycursor.execute(queryID, (service_url,))
    idone = mycursor.fetchone()
    id = idone[0]
+   print(id)
 
    queryDID = "select DID from tbl_scholar where p_URL=%s"
    mycursor.execute(queryDID, (service_url,))
@@ -86,6 +87,7 @@ def updateAmount ( service_url, ranges, h_index) :
    mycursor.execute(querytotalPaper)
    results = mycursor.fetchone()
    totalPaper = results[0]
+   print(totalPaper)
 
    deptCiteScore = deptPaper/totalPaper
    queryCiteScore = "update tbl_dep_count set cite_score = %s where DID =%s"
@@ -94,6 +96,13 @@ def updateAmount ( service_url, ranges, h_index) :
 
    updateHindex = "update tbl_scholar set h_index = %s where scholar_id = %s"
    mycursor.execute(updateHindex, (h_index.text, id))
+   db.commit()
+
+   scholarCite = ranges/totalPaper
+   print(scholarCite)
+   print(id)
+   schcitequery = "update tbl_scholar set cite_score = %s where scholar_id = %s"
+   mycursor.execute(schcitequery,(scholarCite, id))
    db.commit()
 
    return id, DID
