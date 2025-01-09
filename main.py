@@ -16,7 +16,7 @@ def autoScrape () :
 
 autoScrape()
 while True :
-    service = int(input("Are you adding new faculty data or updating existing faculty data (1 for new data 2 for existing data and 3 to exit)"))
+    service = int(input("Are you adding new faculty data or updating existing faculty data (1 for new data 2 for existing data and 3 to delete and 4 to exit)"))
 
     if service == 1  :
         name = input("Provide the name of the faculty ")
@@ -53,6 +53,11 @@ while True :
             print("No faculty with such ID",Existence)
 
     elif service == 3 :
+        dept = input("Enter name of department of the faculty")
+        name = input("Enter faculty name")
+        data.deleteRecords(dept, name)
+
+    elif service == 4 :
         print("exiting program")
         break
 

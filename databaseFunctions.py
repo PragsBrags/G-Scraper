@@ -247,4 +247,20 @@ def updateSchool () :
     mycursor.execute(queryhindex, (h_index, i))
     db.commit()
        
+def deleteRecords (dept, name) :
+   querid = "select s.scholar_id from tbl_scholar s inner join tbl_department d on s.DID = d.DID where d.Dept = %s and s.scholar = %s"
+   mycursor.execute(querid, (dept, name))
+   result = mycursor.fetchone()
+   id = result[0]
 
+   paperdel = "delete s from tbl_paper_author s where s.author_id = %s"
+   mycursor.execute(paperdel, (id,))
+   db.commit()
+
+   countdel = "delete s from tbl_count s where s.scholar_id = %s"
+   mycursor.execute(countdel, (id,))
+   db.commit()
+
+   querydel= "delete s from tbl_scholar s inner join tbl_department d on s.DID = d.DID  where d.Dept = %s and s.scholar = %s"
+   mycursor.execute(querydel, (dept, name))
+   db.commit()
